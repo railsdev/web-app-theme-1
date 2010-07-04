@@ -3,6 +3,10 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <title><%= options[:app_name] %></title>
+  <% if options[:tinymce] == "true" %>
+  <%%= javascript_include_tiny_mce_if_used %>
+  <%%= tiny_mce if using_tiny_mce? %>
+  <% end %>
   <%%= stylesheet_link_tag "web_app_theme", "web_app_theme_override", "themes/<%= options[:theme] %>/style", :cache => true %>
 </head>
 <body>
@@ -15,11 +19,11 @@
           <li><a href="#"><%%= t("web-app-theme.settings", :default => "Settings") %></a></li>
           <li><a href="/logout" class="logout"><%%= t("web-app-theme.logout", :default => "Logout") %></a></li>
         </ul>
-      </div>      
+      </div>
       <div id="main-navigation">
         <ul class="wat-cf"></ul>
       </div>
-    </div>    
+    </div>
     <div id="wrapper" class="wat-cf">
       <div class="flash">
         <%% flash.each do |type, message| -%>
@@ -33,13 +37,14 @@
         <div id="footer">
           <div class="block">
             <p>Copyright &copy; <%%= Time.now.year %> <%= options[:app_name] %>.</p>
-          </div>      
+          </div>
         </div>
       </div>
       <div id="sidebar">
         <%%= yield :sidebar %>
       </div>
-    </div>    
+    </div>
   </div>
 </body>
 </html>
+

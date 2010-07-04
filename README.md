@@ -1,20 +1,33 @@
 Web App Theme
 =============
 
-Web App Theme is a rails generator by [Andrea Franz](http://gravityblast.com) that you can use to generate admin panels quickly.
+Web App Theme is a rails generator forked form http://github.com/pilu/web-app-theme that you can use to generate admin panels quickly.
 Inspired by cool themes like [Lighthouse](http://lighthouseapp.com/), [Basecamp](http://basecamphq.com/), [RadiantCMS](http://radiantcms.org/) and others,
 it wants to be an idea to start developing a complete web application layout.
 
 Installation
 ------------
 
-Install the gem with:
+Install the plugin with:
 
-    sudo gem install web-app-theme -s http://gemcutter.org
-  
-You can also install it as a rails plugin:
+    script/plugin install git://github.com/andreferraro/web-app-theme.git
 
-    script/plugin install git://github.com/pilu/web-app-theme.git
+
+Dependences
+-----------
+
+* JRails: <http://github.com/aaronchi/jrails>
+* Formtastic: <http://github.com/justinfrench/formtastic>
+* Validation Reflection: <http://github.com/redinger/validation_reflection>
+* Inputs: <http://github.com/jtadeulopes/inputs>
+
+### Works better with these plugins
+
+* Tiny MCE: <http://github.com/sandipransing/rails_tiny_mce>
+* Paperclip: <http://github.com/andreferraro/paperclip231>
+* SearchLogic: <http://github.com/binarylogic/searchlogic>
+* Declarative Authorization: <http://github.com/stffn/declarative_authorization>
+* Will Paginate: <http://github.com/mislav/will_paginate>
 
 Usage
 -----
@@ -22,7 +35,7 @@ Usage
 ### Theme Generator
 
 Used without parameters, it generates the layout inside the application.html.erb file using the default theme.
-  
+
     script/generate theme
 
 You can specify the layout file name in the first parameter:
@@ -45,7 +58,7 @@ If you want to generate the stylesheets of a specific theme without changing the
 You can specify the text used in the header with the `--app-name` option:
 
     script/generate theme --app_name="My New Application"
-  
+
 If you need a layout for login and signup pages, you can use the `--type` option with `sign` as value. Ìf not specified, the default value is `administration`
 
     script/generate theme --type=sign
@@ -57,7 +70,7 @@ Start creating your controllers manually or with a scaffold, and then use the `t
 If you have a controller named like the plural of the used model you can specify just the first parameter:
 
     script/generate themed posts # you have a model named Post and a controller named PostsController
-    
+
     script/generate themed admin/gallery_pictures # you have a model named GalleryPicture and a controller named Admin::GalleryPicturesController
 
 Use the `--layout` option specifying the previously generated layout to add a link to the controller you are working on:
@@ -67,24 +80,24 @@ Use the `--layout` option specifying the previously generated layout to add a li
 If the controller has a name different to the model used, specify the controller path in the first parameter and the model name in the second one:
 
     script/generate themed items post
-    
+
     script/generate themed admin/items post
 
 If you use `will_paginate` for pagination use the `--with_will_paginate`:
 
-    script/generate themed items post --with_will_paginate        
+    script/generate themed items post --with_will_paginate
 
 You can specify the template engine with `--engine=name` option, where name can be erb (default) or haml:
 
     script/generate themed posts --engine=haml
 
 If you have something like `map.resource :dashboard` in your `routes.rb` file, you can use the `--type=text` to generate a view with just text:
-    
+
     script/generate themed homes --type=text
 
 If you want to show form error messages inside the generated forms, use the following code inside your `environment.rb`
 
-    ActionView::Base.field_error_proc = Proc.new do |html_tag, instance| 
+    ActionView::Base.field_error_proc = Proc.new do |html_tag, instance|
       if html_tag =~ /<label/
         %|<div class="fieldWithErrors">#{html_tag} <span class="error">#{[instance.error_message].join(', ')}</span></div>|
       else
@@ -94,7 +107,7 @@ If you want to show form error messages inside the generated forms, use the foll
 
 If you want to have translated pages, simple create in your locale.yml the keys just like config/locales/en_us.yml example.
 	en_us:
-	  web-app-theme: 
+	  web-app-theme:
 	    save: Save
 	    cancel: Cancel
 	    list: List
@@ -156,3 +169,4 @@ Credits
 
 * Icons: FAMFAMFAM Silk icons <http://www.famfamfam.com/lab/icons/silk/>
 * Buttons: Particletree - Rediscovering the Button Element <http://particletree.com/features/rediscovering-the-button-element/>
+
