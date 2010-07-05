@@ -43,6 +43,7 @@
         <%% end -%>
       </div>
       <div id="main">
+        <% if options[:breadcrumb] == "true" %><div class="breadcrumbs"><%%= trail.to_html(response) %><% end %></div>
         <%%= yield %>
         <div id="footer">
           <div class="block">

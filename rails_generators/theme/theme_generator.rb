@@ -6,7 +6,8 @@ class ThemeGenerator < Rails::Generator::Base
                   :no_layout => false,
                   :engine => :erb,
                   :jrails => false,
-                  :tinymce => false
+                  :tinymce => false,
+                  :breadcrumb => false
 
   def initialize(runtime_args, runtime_options = {})
     super
@@ -44,6 +45,7 @@ protected
     opt.on("--engine=haml", "Use HAML instead of ERB template engine") { |v| options[:engine] = v }
     opt.on("--jrails=true", "Use JRails") { |v| options[:jrails] = v }
     opt.on("--tinymce=true", "Use TinyMCE in textarea fields") { |v| options[:tinymce] = v }
+    opt.on("--breadcrumb=true", "Add breadcrumbs to application layout") { |v| options[:breadcrumb] = v }
   end
 
 end
