@@ -32,6 +32,12 @@ Dependences
 Usage
 -----
 
+### Before start
+
+Before start, you need to install plugin dependences.
+
+    rake web_app_theme:dependences:install
+
 ### Theme Generator
 
 Used without parameters, it generates the layout inside the application.html.erb file using the default theme.
