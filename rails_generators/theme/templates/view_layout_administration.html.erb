@@ -3,12 +3,21 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <title><%= options[:app_name] %></title>
-  <%%= javascript_include_tag :defaults, "jquery.paginacao", "jquery.flexselect", "liquidmetal", :cache => false %>
+  <% if options[:jrais] == "true" %>
+  <%%= javascript_include_tag :defaults, "jquery.flexselect", "liquidmetal", "jquery.paginacao", "hoverIntent", "superfish", :cache => false %>
+  <script type="text/javascript">
+    // initialise Superfish
+    $(document).ready(function(){
+      $("ul.sf-menu").superfish();
+    });
+  </script>
+  <%%= stylesheet_link_tag "flexselect", "superfish", :cache => true %>
+  <% end %>
+  <%%= stylesheet_link_tag "web_app_theme", "web_app_theme_override", "themes/<%= options[:theme] %>/style", :cache => true %>
   <% if options[:tinymce] == "true" %>
   <%%= javascript_include_tiny_mce_if_used %>
   <%%= tiny_mce if using_tiny_mce? %>
   <% end %>
-  <%%= stylesheet_link_tag "web_app_theme", "web_app_theme_override", "themes/<%= options[:theme] %>/style", "flexselect", :cache => true %>
 </head>
 <body>
   <div id="container">
@@ -22,7 +31,7 @@
         </ul>
       </div>
       <div id="main-navigation">
-        <ul class="wat-cf"></ul>
+        <ul class="<% if options[:jrais] == "true" %>sf-menu<% else %>wat-cf<% end %>"></ul>
       </div>
     </div>
     <div id="wrapper" class="wat-cf">
