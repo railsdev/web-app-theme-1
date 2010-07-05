@@ -41,6 +41,14 @@ Before start, you need to install plugin dependences.
 This command will perform the following tasks:
 
 * Install dependences
+* Copy javascripts assistants:
+    * public/javascripts/application.js - with support to checkall and link add and remove
+    * public/javascripts/hoverIntent.js and
+    * public/javascripts/superfish.js - for Superfish JQuery menu plugin
+    * public/javascripts/jquery.paginacao.js - for Ajax pagination
+* Copy Superfish stylesheet
+* Copy Superfish images
+* Copy spinner for Ajax pagination
 * Execute script/generate formtastic to copy the following files into your app:
     * config/initializers/formtastic.rb – a commented out Formtastic config initializer
     * public/stylesheets/formtastic.css
