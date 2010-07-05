@@ -15,6 +15,8 @@ namespace :web_app_theme do
 			superfish_src = File.join(RAILS_ROOT, '/vendor/plugins/web-app-theme/stylesheets/superfish.css')
 			superfish_dest = File.join(RAILS_ROOT, '/public/stylesheets/')
       FileUtils.cp_r superfish_src, superfish_dest
+      FileUtils.cp_r File.join(RAILS_ROOT, '/vendor/plugins/web-app-theme/stylesheets/flexselect.css'), File.join(RAILS_ROOT, '/public/stylesheets/')
+      flexselect.css
 			puts "Copying images assistants..."
       FileUtils.cp_r File.join(RAILS_ROOT, '/vendor/plugins/web-app-theme/images/arrows-ffffff.png'), File.join(RAILS_ROOT, '/public/images/')
       FileUtils.cp_r File.join(RAILS_ROOT, '/vendor/plugins/web-app-theme/images/shadow.png'), File.join(RAILS_ROOT, '/public/images/')
