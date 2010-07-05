@@ -22,10 +22,10 @@ namespace :web_app_theme do
       FileUtils.cp_r File.join(RAILS_ROOT, '/vendor/plugins/web-app-theme/images/shadow.png'), File.join(RAILS_ROOT, '/public/images/')
       FileUtils.cp_r File.join(RAILS_ROOT, '/vendor/plugins/web-app-theme/images/spinner.gif'), File.join(RAILS_ROOT, '/public/images/')
       sh %{ script/generate formtastic }
-      Rake::Task["jrails:js:install"].invoke
-      Rake::Task["jrails:js:scrub"].invoke
-      Rake::Task["inputs:install"].invoke
-      Rake::Task["inputs:update"].invoke
+      sh %{ rake jrails:js:install }
+      sh %{ rake jrails:js:scrub }
+      sh %{ rake jrails:inputs:install }
+      sh %{ rake jrails:inputs:update }
 			puts "Plugins installed successfully."
 		end
   end
