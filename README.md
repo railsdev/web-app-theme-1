@@ -38,6 +38,20 @@ Before start, you need to install plugin dependences.
 
     rake web_app_theme:dependences:install
 
+This command will perform the following tasks:
+
+* Install dependences
+* Execute script/generate formtastic to copy the following files into your app:
+    * config/initializers/formtastic.rb – a commented out Formtastic config initializer
+    * public/stylesheets/formtastic.css
+    * public/stylesheets/formtastic_changes.css
+* Copy javascripts files to run correctly JQuery in Rails:
+    * public/javascripts/jrails.js
+    * public/javascripts/jquery.js
+    * public/javascripts/jquery-ui.js
+* Remove Prototype javascripts from the application
+* Update the Inputs javascripts
+
 ### Theme Generator
 
 Used without parameters, it generates the layout inside the application.html.erb file using the default theme.
