@@ -7,10 +7,10 @@ namespace :web_app_theme do
       source = File.join(RAILS_ROOT, '/vendor/plugins/web-app-theme/plugins/.')
       dest = File.join(RAILS_ROOT, '/vendor/plugins/')
       FileUtils.cp_r source, dest
-      run "script/generate formtastic"
-      rake "jrails:js:install"
-      rake "jrails:js:scrub"
-      rake "inputs:update"
+      sh %{ script/generate formtastic }
+      Rake::Task["jrails:js:install"].invoke
+      Rake::Task["jrails:js:scrub"].invoke
+      Rake::Task["inputs:update"].invoke
 			puts "Plugins installed successfully."
 		end
   end
