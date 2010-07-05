@@ -87,6 +87,10 @@ You can specify the text used in the header with the `--app-name` option:
 
     script/generate theme --app_name="My New Application"
 
+If you want to support JRails and TinyMCE, then you can use --jrails=true and --tinymce=true:
+
+    script/generate theme --"warehouse" --app_name="My New Application" --jrails=true --tinymce=true
+
 If you need a layout for login and signup pages, you can use the `--type` option with `sign` as value. Ìf not specified, the default value is `administration`
 
     script/generate theme --type=sign
