@@ -80,14 +80,19 @@ protected
     if options[:layout]
       #TODO fix this for haml
       m.gsub_file(File.join("app/views/layouts", "#{options[:layout]}.html.#{@engine}"), /\<div\s+id=\"main-navigation\">.*\<\/ul\>/mi) do |match|
-        match.gsub!(/\<\/ul class\=\"sf\-menu\"\>/, "")
-        if @engine.to_s =~ /haml/
-          %|#{match}
-        %li{:class => controller.controller_path == '#{@controller_file_path}' ? 'active' : '' }
-          %a{:href => #{controller_routing_path}_path} #{plural_model_name}
-        </ul>|
+        if !match.index(controller_routing_path)
+          match.gsub!(/\<\/ul class\=\"sf\-menu\"\>/, "")
+          match=match.gsub("</ul>","")
+          if @engine.to_s =~ /haml/
+            %|#{match}
+          %li{:class => controller.controller_path == '#{@controller_file_path}' ? 'active' : '' }
+            %a{:href => #{controller_routing_path}_path} #{plural_model_name}
+          </ul>|
+          else
+            %|#{match} <li class="<%= controller.controller_path == '#{@controller_file_path}' ? 'active' : '' %>"><a href="<%= #{controller_routing_path}_path %>">#{plural_model_name}</a></li></ul>|
+          end
         else
-          %|#{match} <li class="<%= controller.controller_path == '#{@controller_file_path}' ? 'active' : '' %>"><a href="<%= #{controller_routing_path}_path %>">#{plural_model_name}</a></li></ul>|
+          %|#{match}|
         end
       end
     end

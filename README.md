@@ -60,19 +60,6 @@ This command will perform the following tasks:
 * Remove Prototype javascripts from the application
 * Update the Inputs javascripts
 
-If you found any problem, then you can do:
-
-    script/plugin install git://github.com/aaronchi/jrails.git
-    script/plugin install git://github.com/redinger/validation_reflection.git
-    script/plugin install git://github.com/jtadeulopes/inputs.git
-    script/plugin install git://github.com/justinfrench/formtastic.git
-
-    script/generate formtastic
-    rake jrails:js:install
-    rake jrails:js:scrub
-    rake inputs:install
-    rake inputs:update
-
 ### Theme Generator
 
 Used without parameters, it generates the layout inside the application.html.erb file using the default theme.
@@ -131,6 +118,12 @@ If the controller has a name different to the model used, specify the controller
 If you use `will_paginate` for pagination use the `--with_will_paginate`:
 
     script/generate themed items post --with_will_paginate
+
+If you want fullpower of Web-App-Theme use:
+
+    script/generate themed estadios estadio --with_will_paginate --ajaxpage --removeall --searchlogic --listfields=apelido:Estádio,cidade_cidade:Cidade,fundacao:Fundado\ em,funcionando:Funcionando\? --layout=backend
+
+  Note that was escaped spaces and special chars.
 
 You can specify the template engine with `--engine=name` option, where name can be erb (default) or haml:
 

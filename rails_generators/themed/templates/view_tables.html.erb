@@ -54,9 +54,9 @@
               listfield.each do |linha|
                 valorlinha = linha.split(":")
                 if iCont > 0%>
-                  <td><%%= <%= resource_name %>.<%=valorlinha[0]%> %></td>
+                  <td><%%= <%= resource_name %>.<%=valorlinha[0].gsub("_",".")%> %></td>
                 <%else%>
-                  <td><%%= link_to <%= resource_name %>.<%=valorlinha[0]%>, <%= singular_controller_routing_path %>_path(<%= resource_name %>) %></td>
+                  <td><%%= link_to <%= resource_name %>.<%=valorlinha[0].gsub("_",".")%>, <%= singular_controller_routing_path %>_path(<%= resource_name %>) %></td>
                 <%end%>
               <%
                 iCont += 1
@@ -99,7 +99,6 @@
     </div>
   </form>
   <%end%>
-  </div>
 </div>
 
 <%% content_for :sidebar, render(:partial => 'sidebar') -%>

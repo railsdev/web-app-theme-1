@@ -1,1 +1,96 @@
 /* Override here any style definide by web-app-theme */
+.table th a:link {text-decoration: none; color: #FFF;}
+.table th a:visited {text-decoration: none; color: #FFF;}
+.table th a:hover {text-decoration: underline; color: #FFF;}
+.table th a:active {text-decoration: none; color: #FFF;}
+
+/* Titulos */
+.titulo {border-top-color: #0a81d0; background: #0C4D05;}
+.titulo h4 {font-weight:bold;padding:0px 20px;text-shadow: #151515 0 1px 0;text-align:left;color:#fff;}
+.titulo h4 img {vertical-align:middle;margin-right:4px;}
+
+/* Spinner Ajax Page */
+#carregando .loading {
+    position:relative;
+    float:right;
+    top:-30px;
+    background-color:#E4EBE5;
+    padding:3px 6px;
+}
+#carregando .loading img {
+    vertical-align:middle;
+    margin-right:4px;
+}
+
+.total_pages {
+    top:45px;
+    position:relative;
+    float:right;
+}
+.total_pages1 {
+    right:-160px;
+}
+.dbotao{
+    position:relative;float:left;top:-70px;left:14px;
+}
+
+.t30 {
+    width:30px;
+}
+.t60 {
+    width:60px;
+}
+.t80 {
+    width:80px;
+}
+.t100 {
+    width:100px;
+}
+.t120 {
+    width:120px;
+}
+.t140 {
+    width:140px;
+}
+.t160 {
+    width:160px;
+}
+.t200 {
+    width:200px;
+}
+.t260 {
+    width:260px;
+}
+.t300 {
+    width:300px;
+}
+.centro {
+    text-align:center;
+}
+
+/* IN PLACE EDITOR */
+.in_place_editor_field {
+    cursor: pointer;
+}
+.inplace_field {
+    border: 1px solid #ccc;
+    font-size: 90%;
+    width: 100%;
+}
+.inplace_save {
+    width: 20px;
+    border: 0px solid;
+    cursor: pointer;
+    background: transparent url('/images/web-app-theme/accept.png') no-repeat center top;
+    background-color: #fff;
+    height: 20px;
+}
+.inplace_cancel {
+    width: 20px;
+    border: 0px solid;
+    cursor: pointer;
+    background: transparent url('/images/web-app-theme/cancel.png') no-repeat center top;
+    background-color: #fff;
+    height: 20px;
+}
+
