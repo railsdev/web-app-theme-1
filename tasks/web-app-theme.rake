@@ -24,8 +24,8 @@ namespace :web_app_theme do
       sh %{ script/generate formtastic }
       sh %{ rake jrails:js:install }
       sh %{ rake jrails:js:scrub }
-      sh %{ rake jrails:inputs:install }
-      sh %{ rake jrails:inputs:update }
+      sh %{ rake inputs:install }
+      sh %{ rake inputs:update }
 			puts "Plugins installed successfully."
 		end
   end
