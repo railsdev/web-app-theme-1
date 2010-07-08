@@ -1,13 +1,50 @@
+<% if options[:datepicker] %>
+<script type="text/javascript" src="/javascripts/jquery.ui.datepicker-pt-BR.js"></script>
+<link type="text/css" rel="stylesheet" media="screen" href="/stylesheets/jquery-ui.css"></link>
+<% end %>
+<% if options[:flexselect] || options[:datepicker] %>
+<script type="text/javascript">
+  //<![CDATA[
+  jQuery(document).ready(function() {
+    <%if options[:flexselect]%>$("select.flexselect").flexselect();<%end%>
+    <%if options[:datepicker]%>$('input.ui-datepicker').datepicker($.datepicker.regional['pt-BR']);<%end%>
+  });
+  //]]>
+</script>
+<% end %>
 <% columns.each do |column| %>
+    <% if column.name.index("_file_name")%>
+      <% coluna = column.name.gsub("_file_name","") %>
   <div class="group">
-    <%%= f.label :<%= column.name %>, t("activerecord.attributes.<%= model_name.underscore %>.<%= column.name %>", :default => "<%= column.name.humanize %>"), :class => :label %>
-    <%%= f.<%= column.field_type %> :<%= column.name %>, :class => '<%= column.field_type %>' %>
-    <span class="description">Ex: a simple text</span>
+      <%%= f.input :<%= coluna %>, :label => "<%= coluna.humanize %>:", :as => :file, :input_html => {:class => 'text_field'}, :hint => "Ex: a simple text" %>
   </div>
-<%- end -%>        
+      <%% unless @<%=model_name.downcase%>.new_record? || !@<%=model_name.downcase%>.<%= coluna %>? %>
+        <div class="group">
+          <%%= image_tag(@<%=model_name.downcase%>.<%= coluna %>.url, :alt => '<%= coluna.humanize %>', :title => '<%= coluna.humanize %> atual') %><br/>
+          <%%= f.check_box :delete_<%= coluna %> %><%%= f.label(:delete_<%= coluna %>, 'Apagar <%= coluna.humanize %>') %>
+        </div>
+      <%% end %>
+    <% else %>
+      <% if !column.name.index("_content_type") && !column.name.index("_file_size") && !column.name.index("_updated_at") %>
+  <div class="group">
+        <% if column.name.index("_id") %>
+          <% coluna = column.name.gsub("_id","") %>
+      <li class="string optional">
+      <label for="<%=model_name.downcase%>_<%=column.name%>"><%= coluna.titleize %>:</label>
+      <%%= f.collection_select(:<%= column.name %>, <%= coluna.titleize %>.find(:all), :id, :<%=coluna%>, {:prompt => false}, :class => '<% if options[:flexselect] %>flexselect<%end%> text_field') %>
+      <span class="description">Ex: a simple text</span>
+      </li>
+        <%else%>
+      <%%= f.input :<%= column.name %>, :label => "<%= column.name.humanize %>:"<% if options[:datepicker] && column.type.to_s == "date"%>, :as => :datepicker, :mask => :date<%end%>, :input_html => {<% if column.type.to_s == "string" %>:maxlength => <%=column.limit%>,<%end%> :class => '<% if options[:datepicker] && column.type.to_s == "date"%>ui-datepicker <%end%><% if options[:tinymce] && field_type(column.type).to_s == "text_area" %>mceEditor<%else%>text_field<%end%>'}, :hint => "Ex: a simple text" %>
+        <%end%>
+  </div>
+      <% end %>
+    <% end %>
+<%- end -%>
 <div class="group navform wat-cf">
   <button class="button" type="submit">
     <%%= image_tag("web-app-theme/tick.png", :alt => "#{t("web-app-theme.save", :default => "Save")}") %> <%%= t("web-app-theme.save", :default => "Save") %>
-  </button>  
-  <%%= link_to "#{image_tag("web-app-theme/cross.png", :alt => "#{t("web-app-theme.cancel", :default => "Cancel")}")} #{t("web-app-theme.cancel", :default => "Cancel")}", <%= controller_routing_path %>_path, :class => "button" %> 
+  </button>
+  <%%= link_to "#{image_tag("web-app-theme/cross.png", :alt => "#{t("web-app-theme.cancel", :default => "Cancel")}")} #{t("web-app-theme.cancel", :default => "Cancel")}", <%= controller_routing_path %>_path, :class => "button" %>
 </div>
+

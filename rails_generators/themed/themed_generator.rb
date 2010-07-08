@@ -1,3 +1,4 @@
+#script/generate themed backend/basicos/cidades cidade --layout=backend --with_will_paginate --ajaxpage --tinymce --removeall --flexselect --datepicker --searchlogic --listfields cidade:Cidade,ddd:DDD,uf_sigla:UF
 class ThemedGenerator < Rails::Generator::NamedBase
 
   default_options :app_name => 'Web App',
@@ -38,6 +39,20 @@ class ThemedGenerator < Rails::Generator::NamedBase
     @engine           = options[:engine]
   end
 
+  def field_type(type)
+    field_type ||= case type
+      when :integer, :float, :decimal then :text_field
+      when :time                      then :time_select
+      when :datetime, :timestamp      then :datetime_select
+      when :date                      then :date_select
+      when :string                    then :text_field
+      when :text                      then :text_area
+      when :boolean                   then :check_box
+      else
+        :text_field
+    end
+  end
+
   def manifest
     @controller_routing_path          = @table_name
     @singular_controller_routing_path = @table_name.singularize
@@ -52,7 +67,6 @@ class ThemedGenerator < Rails::Generator::NamedBase
     @resource_name        = @model_name.underscore
     # posts
     @plural_resource_name = @resource_name.pluralize
-
     manifest_method = "manifest_for_#{options[:themed_type]}"
     record do |m|
       send(manifest_method, m) if respond_to?(manifest_method)
@@ -62,7 +76,8 @@ class ThemedGenerator < Rails::Generator::NamedBase
 protected
 
   def manifest_for_crud(m)
-    @columns = get_columns
+    excluded_column_names = %w[id created_at updated_at]
+    @columns = Kernel.const_get(@model_name).columns.reject{|c| excluded_column_names.include?(c.name) }
     m.directory(File.join('app/views', @controller_file_path))
     if options[:ajaxpage]
       m.template("view_tables_ajax.html.#{@engine}",  File.join("app/views", @controller_file_path, "index.html.#{@engine}"))

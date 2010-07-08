@@ -60,19 +60,6 @@ This command will perform the following tasks:
 * Remove Prototype javascripts from the application
 * Update the Inputs javascripts
 
-If you found any problem, then you can do:
-
-    script/plugin install git://github.com/aaronchi/jrails.git
-    script/plugin install git://github.com/redinger/validation_reflection.git
-    script/plugin install git://github.com/jtadeulopes/inputs.git
-    script/plugin install git://github.com/justinfrench/formtastic.git
-
-    script/generate formtastic
-    rake jrails:js:install
-    rake jrails:js:scrub
-    rake inputs:install
-    rake inputs:update
-
 ### Theme Generator
 
 Used without parameters, it generates the layout inside the application.html.erb file using the default theme.
@@ -102,7 +89,7 @@ You can specify the text used in the header with the `--app-name` option:
 
 If you want to support JRails and TinyMCE, then you can use --jrails=true and --tinymce=true:
 
-    script/generate theme --theme="warehouse" --app_name="Testando WebAppTheme" --jrails=true --tinymce=true --breadcrumb=true
+    script/generate theme --"warehouse" --app_name="My New Application" --jrails=true --tinymce=true
 
 If you need a layout for login and signup pages, you can use the `--type` option with `sign` as value. Ìf not specified, the default value is `administration`
 

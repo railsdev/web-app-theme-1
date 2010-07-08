@@ -5,21 +5,45 @@
       <li><%%= link_to "#{t("web-app-theme.new", :default => "New")}", new_<%= singular_controller_routing_path %>_path %></li>
       <li class="active"><%%= link_to "#{t("web-app-theme.show", :default => "Show")}", <%= singular_controller_routing_path %>_path %></li>
     </ul>
-  </div>          
+  </div>
   <div class="content">
     <div class="inner">
       <% columns.each do |column| %>
-        <p>
-          <b><%%= t("activerecord.attributes.<%= singular_controller_routing_path %>.<%= column.name %>", :default => t("activerecord.labels.<%= column.name %>", :default => "<%= column.name.humanize %>")) %>:</b>
-          <%%= @<%= resource_name %>.<%= column.name %> %>
-        </p>
+        <% if column.name.index("_file_name")%>
+          <% coluna = column.name.gsub("_file_name","") %>
+          <p>
+            <b><%=coluna.humanize%>:</b>
+            <%%tipoimagens = "image/gif,image/png,image/jpeg,image/tiff,image/bmp,image/x-icon".split(",")%>
+            <%% if tipoimagens.include?(@uf.bandeira_content_type.to_s) %>
+              <%%= image_tag(@<%= resource_name %>.<%= coluna %>.url, :alt => '<%= coluna.humanize %>', :title => '<%= coluna.humanize %>') %>
+            <%%else%>
+              <a href="<%%= @<%= resource_name %>.<%= coluna %>.url %>"><img src="/images/web-app-theme/download.png"></a>
+            <%%end%>
+          </p>
+        <% else %>
+          <% if !column.name.index("_content_type") && !column.name.index("_file_size") && !column.name.index("_updated_at") %>
+            <% if column.name.index("_id") %>
+              <% coluna = column.name.gsub("_id","") %>
+              <p>
+                <b><%=coluna.humanize%>:</b>
+                <%%= @<%= resource_name %>.<%= coluna %>.<%= coluna %> %>
+              </p>
+            <%else%>
+              <p>
+                <b><%%= t("activerecord.attributes.<%= singular_controller_routing_path %>.<%= column.name %>", :default => t("activerecord.labels.<%= column.name %>", :default => "<%= column.name.humanize %>")) %>:</b>
+                <%%= @<%= resource_name %>.<%= column.name %> %>
+              </p>
+            <%end%>
+          <%end%>
+        <%end%>
       <%- end -%>
       <div class="wat-cf">
-        <%%= link_to "#{image_tag("web-app-theme/application_edit.png", :alt => "#{t("web-app-theme.edit", :default=> "Edit")}")} #{t("web-app-theme.edit", :default=> "Edit")}", edit_<%= singular_controller_routing_path %>_path(@<%= resource_name %>), :class => "button" %> 
+        <%%= link_to "#{image_tag("web-app-theme/application_edit.png", :alt => "#{t("web-app-theme.edit", :default=> "Edit")}")} #{t("web-app-theme.edit", :default=> "Edit")}", edit_<%= singular_controller_routing_path %>_path(@<%= resource_name %>), :class => "button" %>
         <%%= link_to "#{image_tag("web-app-theme/cross.png", :alt => "#{t("web-app-theme.delete", :default=> "Delete")}")} #{t("web-app-theme.delete", :default => "Delete")}", <%= singular_controller_routing_path %>_path(@<%= resource_name %>), :method => "delete", :class => "button", :confirm => "#{t("web-app-theme.confirm", :default => "Are you sure?")}" %>
-      </div>      
+      </div>
     </div>
   </div>
 </div>
 
 <%% content_for :sidebar, render(:partial => 'sidebar') -%>
+
