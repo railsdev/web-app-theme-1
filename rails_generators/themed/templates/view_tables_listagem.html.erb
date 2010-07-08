@@ -77,6 +77,8 @@
         </div>
         <% if options[:will_paginate] %>
         <%%= will_paginate @<%= plural_resource_name %><% if options[:searchlogic] %>, :params => { 'search[order]' => @search.order}<%end%> %>
+        <%% if @<%= plural_resource_name %>.total_pages > 1 %><span class="total_pages total_pages1"><%% else %><span class="total_pages"><%% end %>Total geral de registros: <strong><%%= @<%= plural_resource_name %>.total_entries %></strong></span>
         <% end %>
+        <p style="clear:both;">&nbsp;</p>
       </div>
 

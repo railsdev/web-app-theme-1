@@ -14,7 +14,7 @@
           formupload = true
         end
       end%>
-      <%% semantic_form_for @<%= model_name.underscore  %>, :url => <%= controller_routing_path %>_path, :html => {<% if formupload == true%>:multipart => true,<%end%>:class => "form"} do |f| -%>
+      <%% semantic_form_for @<%= model_name.underscore  %>, :url => <%= controller_routing_path %>_path, <%if options[:ajaxpage]%>:live_validations => true,<%end%> :html => {<% if formupload == true%>:multipart => true,<%end%>:class => "form"} do |f| -%>
         <%%= render :partial => "form", :locals => {:f => f} %>
       <%% end -%>
     </div>
