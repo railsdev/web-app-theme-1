@@ -60,6 +60,19 @@ This command will perform the following tasks:
 * Remove Prototype javascripts from the application
 * Update the Inputs javascripts
 
+If you found any problem, then you can do:
+
+    script/plugin install git://github.com/andreferraro/jrails.git
+    script/plugin install git://github.com/redinger/validation_reflection.git
+    script/plugin install git://github.com/jtadeulopes/inputs.git
+    script/plugin install git://github.com/andreferraro/formtastic.git
+
+    script/generate formtastic
+    rake jrails:js:install
+    rake jrails:js:scrub
+    rake inputs:install
+    rake inputs:update
+
 ### Theme Generator
 
 Used without parameters, it generates the layout inside the application.html.erb file using the default theme.
