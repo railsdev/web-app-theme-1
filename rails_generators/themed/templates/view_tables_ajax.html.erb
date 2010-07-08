@@ -23,4 +23,32 @@
 </div>
 
 <%% content_for :sidebar, render(:partial => 'sidebar') -%>
+<% if options[:removeall] %>
+<div id="dialog" title="Confirmação de exclusão de lote de registros"><p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 0 0;"></span><b>Deseja remover todos os registros selecionados?</b><p></div>
+<script type="text/javascript">
+$(function(){
+        // jQuery UI Dialog
+
+        $('#dialog').dialog({
+            autoOpen: false,
+            width: 400,
+            modal: true,
+            resizable: false,
+            buttons: {
+                "Apagar lote": function() {
+                  document.forms['formlote'].submit();
+                },
+                "Cancelar": function() {
+                    $(this).dialog("close");
+                }
+            }
+        });
+
+        $('form#formlote').submit(function(){
+            $('#dialog').dialog('open');
+            return false;
+        });
+});
+</script>
+<%end%>
 

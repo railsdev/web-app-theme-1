@@ -1,8 +1,43 @@
 <div class="block">
-  <h3>Simple Block</h3>
-  <div class="content">
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-  </div>
+ <%% if params[:action] == "index" %>
+     <% if options[:flexselect]%>
+    <script type="text/javascript">
+      //<![CDATA[
+      jQuery(document).ready(function() {
+        <%if options[:flexselect]%>$("select.flexselect").flexselect();<%end%>
+      });
+      //]]>
+    </script>
+    <% end %>
+    <h3>Buscar</h3>
+    <div class="content">
+      <p>Para buscar um <%=model_name%>, basta preencher algum dos campos abaixo:</p>
+      <%% form_for @search do |f| %>
+        <%columns.each do |column|%>
+          <% if !column.name.index("_file_name") && !column.name.index("_content_type") && !column.name.index("_file_size") && !column.name.index("_updated_at") %>
+            <% if column.name.index("_id") %>
+            <% coluna = column.name.gsub("_id","") %>
+        <p>
+          <%%= f.label :<%= column.name %>_equals, "<%= coluna.titleize %>:" %><br />
+          <%%= f.collection_select(:<%= column.name %>_equals, <%= coluna.titleize %>.find(:all), :id, :<%=coluna%>, {:prompt => false}, :class => '<% if options[:flexselect] %>flexselect<%end%> text_field') %>
+        </p>
+            <%else%>
+        <p>
+          <%%= f.label :<%= column.name %>_like, "<%= column.name.humanize %>:" %><br />
+          <%%= f.text_field :<%= column.name %>_like %>
+        </p>
+            <%end%>
+          <%end%>
+        <%end%>
+        <button class="button" type="submit" name="commit" value="Buscar">
+           <%%= image_tag("web-app-theme/find.png", :alt => "Buscar") %> <%%= t("web-app-theme.destroy", :default => "Buscar") %>
+        </button>
+        <%%= link_to "#{image_tag("web-app-theme/house_go.png", :alt => "Limpar")} Limpar", backend_basicos_ufs_path, :class => "button" %>
+        <p>&nbsp</p>
+        <p>&nbsp</p>
+      <%%end%>
+    </div>
+  <%% end %>
 </div>
 <div class="block">
   <h3>Links</h3>
@@ -11,3 +46,4 @@
     <li><a href="#">Link 2</a></li>
   </ul>
 </div>
+
