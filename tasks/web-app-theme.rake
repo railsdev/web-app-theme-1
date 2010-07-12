@@ -13,11 +13,9 @@ namespace :web_app_theme do
 			scripts = Dir[File.join(File.dirname(__FILE__), '..', '/javascripts/', '*.js')]
 			FileUtils.cp(scripts, project_dir)
 			puts "Copying stylesheets assistants..."
-			superfish_src = File.join(RAILS_ROOT, '/vendor/plugins/web-app-theme/stylesheets/superfish.css')
-			superfish_dest = File.join(RAILS_ROOT, '/public/stylesheets/')
-      FileUtils.cp_r superfish_src, superfish_dest
-      FileUtils.cp_r File.join(RAILS_ROOT, '/vendor/plugins/web-app-theme/stylesheets/flexselect.css'), File.join(RAILS_ROOT, '/public/stylesheets/')
-      FileUtils.cp_r File.join(RAILS_ROOT, '/vendor/plugins/web-app-theme/stylesheets/flexselect.css'), File.join(RAILS_ROOT, '/public/stylesheets/')
+			style_dir = RAILS_ROOT + '/public/stylesheets/'
+			styles = Dir[File.join(File.dirname(__FILE__), '..', '/stylesheets/', '*.css')]
+			FileUtils.cp(styles, style_dir)
 			puts "Copying images assistants..."
       FileUtils.cp_r File.join(RAILS_ROOT, '/vendor/plugins/web-app-theme/images/arrows-ffffff.png'), File.join(RAILS_ROOT, '/public/images/')
       FileUtils.cp_r File.join(RAILS_ROOT, '/vendor/plugins/web-app-theme/images/shadow.png'), File.join(RAILS_ROOT, '/public/images/')

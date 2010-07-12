@@ -1,3 +1,7 @@
+<%if options[:datepicker] %>
+<div class="search-daterangepicker" style="position:absolute;right:1px;width:980px;">
+</div>
+<%end%>
 <div class="block">
  <%% if params[:action] == "index" %>
      <% if options[:flexselect]%>
@@ -9,22 +13,76 @@
       //]]>
     </script>
     <% end %>
+    <%if options[:datepicker] %>
+    <link rel="stylesheet" href="/stylesheets/ui.daterangepicker-left.css" type="text/css" />
+		<script type="text/javascript" src="/javascripts/daterangepicker.jQuery.js"></script>
+    <script type="text/javascript" src="/javascripts/jquery.ui.datepicker-pt-BR.js"></script>
+      <%columns.each do |column|%>
+        <%if column.type.to_s == "date"%>
+		<script type="text/javascript">
+			$(function(){
+    			var rangeInput = jQuery('#campo_<%= column.name %>');
+          $('#formBusca').submit(function() {
+            dataPeriodo = $('#campo_<%= column.name %>').val()
+            if (dataPeriodo.indexOf("a") > 0)
+            {
+              $('#search_<%= column.name %>_gte').val(dataPeriodo.slice(0,dataPeriodo.indexOf("a")-1));
+              $('#search_<%= column.name %>_lte').val(dataPeriodo.slice(dataPeriodo.indexOf("a")+2));
+              $('#search_<%= column.name %>_equals').val("");
+            }else{
+              $('#search_<%= column.name %>_gte').val("");
+              $('#search_<%= column.name %>_lte').val("");
+              $('#search_<%= column.name %>_equals').val(dataPeriodo);
+            }
+            return true;
+          });
+				  $('#campo_<%= column.name %>').daterangepicker({
+            presetRanges: [
+              {text: 'Hoje', dateStart: 'today', dateEnd: 'today' },
+              {text: '&Uacute;ltimos 7 dias', dateStart: 'today-7days', dateEnd: 'today' },
+              {text: 'Pr&oacute;ximos 7 dias', dateStart: 'today', dateEnd: 'today+7days' },
+              {text: 'Neste m&ecirc;s', dateStart: function(){ return Date.parse('today').moveToFirstDayOfMonth();  }, dateEnd: 'today' },
+              {text: 'Neste ano', dateStart: function(){ var x= Date.parse('today'); x.setMonth(0); x.setDate(1); return x; }, dateEnd: 'today' },
+              {text: '&Uacute;ltimos 30 dias', dateStart: 'Today-30', dateEnd: 'Today' },
+              {text: 'Pr&oacute;ximos 30 dias', dateStart: 'Today', dateEnd: 'Today+30' },
+              //extras:
+              {text: 'M&ecirc;s passado', dateStart: function(){ return Date.parse('1 month ago').moveToFirstDayOfMonth();  }, dateEnd: function(){ return Date.parse('1 month ago').moveToLastDayOfMonth();  } },
+              {text: 'M&ecirc;s que vem', dateStart: function(){ return Date.parse('next month').moveToFirstDayOfMonth();  }, dateEnd: function(){ return Date.parse('next month').moveToLastDayOfMonth();  } }
+              //{text: 'Minha data', dateStart: 'Tomorrow', dateEnd: 'Tomorrow' },
+              //{text: 'Meu periodo', dateStart: '03/07/08', dateEnd: '07/08/08' }
+            ],
+         		appendTo: '.search-daterangepicker',
+		        posX: rangeInput.offset().left-970, // x position
+		        posY: rangeInput.offset().top + rangeInput.outerHeight()-80, // y position
+            datepickerOptions: {changeMonth: true, changeYear: true }});
+			 });
+		</script>
+        <% end %>
+      <% end %>
+    <% end %>
     <h3>Buscar</h3>
     <div class="content">
       <p>Para buscar um <%=model_name%>, basta preencher algum dos campos abaixo:</p>
-      <%% form_for @search do |f| %>
+      <%% form_for @search, :html => {:id => "formBusca"} do |f| %>
         <%columns.each do |column|%>
           <% if !column.name.index("_file_name") && !column.name.index("_content_type") && !column.name.index("_file_size") && !column.name.index("_updated_at") %>
             <% if column.name.index("_id") %>
             <% coluna = column.name.gsub("_id","") %>
         <p>
           <%%= f.label :<%= column.name %>_equals, "<%= coluna.titleize %>:" %><br />
-          <%%= f.collection_select(:<%= column.name %>_equals, <%= coluna.titleize %>.find(:all), :id, :<%=coluna%>, {:prompt => false}, :class => '<% if options[:flexselect] %>flexselect<%end%> text_field') %>
+          <%%= f.collection_select(:<%= column.name %>_equals, <%= coluna.titleize %>.find(:all, :order => "<%=coluna%>"), :id, :<%=coluna%>, {:include_blank => true, :prompt => false}, :class => '<% if options[:flexselect] %>flexselect<%end%> text_field') %>
         </p>
             <%else%>
         <p>
           <%%= f.label :<%= column.name %>_like, "<%= column.name.humanize %>:" %><br />
+              <%if column.type.to_s == "date" %>
+                <%%= f.hidden_field :<%= column.name %>_gte %>
+                <%%= f.hidden_field :<%= column.name %>_lte %>
+                <%%= f.hidden_field :<%= column.name %>_equals %>
+                <input type="text" id="campo_<%= column.name %>" size="24">
+              <%else%>
           <%%= f.text_field :<%= column.name %>_like %>
+              <%end%>
         </p>
             <%end%>
           <%end%>
@@ -32,7 +90,7 @@
         <button class="button" type="submit" name="commit" value="Buscar">
            <%%= image_tag("web-app-theme/find.png", :alt => "Buscar") %> <%%= t("web-app-theme.destroy", :default => "Buscar") %>
         </button>
-        <%%= link_to "#{image_tag("web-app-theme/house_go.png", :alt => "Limpar")} Limpar", backend_basicos_ufs_path, :class => "button" %>
+        <%%= link_to "#{image_tag("web-app-theme/house_go.png", :alt => "Limpar")} Limpar", <%=controller_routing_path%>_path, :class => "button" %>
         <p>&nbsp</p>
         <p>&nbsp</p>
       <%%end%>

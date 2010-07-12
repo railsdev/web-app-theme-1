@@ -1,4 +1,5 @@
-#script/generate themed backend/basicos/cidades cidade --layout=backend --with_will_paginate --ajaxpage --tinymce --removeall --flexselect --datepicker --searchlogic --listfields cidade:Cidade,ddd:DDD,uf_sigla:UF
+#script/generate themed backend/basicos/ufs uf --layout=backend --with_will_paginate --ajaxpage --tinymce --removeall --flexselect --datepicker --searchlogic --exports --listfields=uf:Estado,sigla:Sigla
+#script/generate themed backend/basicos/cidades cidade --layout=backend --with_will_paginate --ajaxpage --tinymce --removeall --flexselect --datepicker --searchlogic --exports --listfields=cidade:Cidade,fundacao:Fundada\ em,ddd:DDD,uf_sigla:UF
 class ThemedGenerator < Rails::Generator::NamedBase
 
   default_options :app_name => 'Web App',
