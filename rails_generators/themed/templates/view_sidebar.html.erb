@@ -13,12 +13,14 @@
       //]]>
     </script>
     <% end %>
-    <%if options[:datepicker] %>
+    <%if options[:datepicker]
+      putJS = 0%>
+      <%columns.each do |column|%>
+        <%if column.type.to_s == "date" && putJS == 0
+            putJS += 1%>
     <link rel="stylesheet" href="/stylesheets/ui.daterangepicker-left.css" type="text/css" />
 		<script type="text/javascript" src="/javascripts/daterangepicker.jQuery.js"></script>
     <script type="text/javascript" src="/javascripts/jquery.ui.datepicker-pt-BR.js"></script>
-      <%columns.each do |column|%>
-        <%if column.type.to_s == "date"%>
 		<script type="text/javascript">
 			$(function(){
     			var rangeInput = jQuery('#campo_<%= column.name %>');
