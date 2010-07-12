@@ -1,0 +1,48 @@
+<div id="ajuda" title="Ajuda">
+  <p style="font-size:10px;">Esta página propicia uma série de funcionalidades do sistema. Abaixo estão listadas as principais funcionalidades com as explicações quanto ao funcionamento:</p>
+  <table>
+    <tr>
+      <td style="width:50%;vertical-align:top;">
+        <p style="font-size:10px;clear:both;"><img src="/images/ajuda/breadcrumbs.png" alt="breadcrumbs" title="breadcrumbs"><br/>Indica em qual módulo e ação você está neste momento.</p>
+        <p style="font-size:10px;clear:both;"><img src="/images/ajuda/listagem-novo.png" alt="listagem e novo" title="listagem e novo"><br/>É esta página, clicando nesta aba você retornará para a primeira página deste módulo.</p>
+        <p style="font-size:10px;clear:both;"><b>Novo</b><br/>Clicando nesta aba você poderá inserir um novo registro no banco de dados.</p>
+        <p style="font-size:10px;clear:both;"><img src="/images/ajuda/marcar-todos.png" alt="marcar todos" title="marcar todos" style="float:left;padding:4px;">Este campo permite que todos os demais campos semelhantes, referentes aos registros, sejam marcados possibilitando a exclusão em lote.</p>
+        <p style="font-size:10px;clear:both;"><img src="/images/ajuda/marcar-registros.png" alt="marcar registros" title="marcar registros" style="float:left;">Você poderá marcar individualmente cada registro desta página para posteriormente clicar em apagar lote de registros.</p>
+        <p style="font-size:10px;clear:both;"><img src="/images/ajuda/apagar-lote.png" alt="apagar lote" title="apagar lote" style="float:left;padding:4px;">Remove todos os registros marcados. Cuidado, pois esta ação é irreversível.</p>
+        <p style="font-size:10px;clear:both;"><img src="/images/ajuda/paginacao.png" alt="paginação" title="paginação"><br/>Permite navegar entre os registros do banco de dados.</p>
+        <p style="font-size:10px;clear:both;"><img src="/images/ajuda/buscar.png" alt="buscar" title="buscar" style="float:left;padding:4px;">Aplica o filtro em todos os registros do banco de dados.</p>
+      </td>
+      <td style="width:50%;vertical-align:top;">
+        <p style="font-size:10px;clear:both;"><img src="/images/web-app-theme/pdf.png" alt="pdf" title="pdf"><br/>Gera arquivo PDF de todos os registros. Portable Document Format, é um formato de arquivo que pode ser aberto em diversos dispositivos e é ideal para impressão.</p>
+        <p style="font-size:10px;clear:both;"><img src="/images/web-app-theme/xml.png" alt="xml" title="xml"><br/>Exporta todos os registros no formato XML. eXtensible Markup Language, é uma linguagem de marcação recomendada pela W3C para a criação de documentos com dados organizados hierarquicamente.</p>
+        <p style="font-size:10px;clear:both;"><img src="/images/web-app-theme/csv.png" alt="csv" title="csv"><br/>Exporta todos os registros no formato CSV. Comma-separated values, é um formato de arquivo separado por virgulas. Pode ser importado diretamente no OpenOffice ou MS-Excel.</p>
+        <p style="font-size:10px;clear:both;"><img src="/images/web-app-theme/json.png" alt="json" title="json"><br/>Exporta todos os registros no formato JSON. JavaScript Object Notation, é utilizado principalmente para tráfego de informações em ambientes heterogêneos via HTTP. JSON é mais leve que o XML.</p>
+        <p style="font-size:10px;clear:both;"><img src="/images/ajuda/pdf-json-xml-csv.png" alt="pdf/xml/csv/json" title="pdf/xml/csv/json" style="float:left;padding:4px;">Exporta os dados desta página no formato PDF (vermelho), XML (laranja), CSV (verde) ou JSON (azul).</p>
+        <p style="font-size:10px;clear:both;"><img src="/images/ajuda/pdf.png" alt="Gera PDF" title="Gera PDF" style="float:left;padding:4px;">Ação existente apenas na exibição de registros. Gera arquivo PDF.</p>
+      </td>
+    </tr>
+  </table>
+</div>
+<script type="text/javascript">
+$(function(){
+        // jQuery UI Dialog
+        $.ui.dialog.defaults.bgiframe = true;
+        $(function() {
+            $('#ajuda').dialog({
+                width: 860,
+                modal: true,
+                resizable: true,
+                autoOpen: false,
+                buttons: {
+                    "Fechar": function() {
+                        $(this).dialog("close");
+                    }
+                }
+            });
+            $('#ajudalink').click(function() {
+                $('#ajuda').dialog('open');
+            });
+        });
+});
+</script>
+

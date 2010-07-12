@@ -12,7 +12,8 @@ class ThemedGenerator < Rails::Generator::NamedBase
                   :removeall => false,
                   :flexselect => false,
                   :datepicker => false,
-                  :searchlogic => false
+                  :searchlogic => false,
+                  :exports => false
 
   attr_reader :controller_routing_path,
               :singular_controller_routing_path,
@@ -29,6 +30,7 @@ class ThemedGenerator < Rails::Generator::NamedBase
               :flexselect,
               :datepicker,
               :searchlogic,
+              :exports,
               :listfields,
               :fieldlist
 
@@ -86,10 +88,18 @@ protected
     else
       m.template("view_tables.html.#{@engine}",  File.join("app/views", @controller_file_path, "index.html.#{@engine}"))
     end
+    if options[:exports]
+      m.template("view_index.csv.csvbuilder",     File.join("app/views", @controller_file_path, "index.csv.csvbuilder"))
+      m.template("view_index.pdf.prawn",     File.join("app/views", @controller_file_path, "index.pdf.prawn"))
+      m.template("view_export.csv.csvbuilder",     File.join("app/views", @controller_file_path, "export.csv.csvbuilder"))
+      m.template("view_export.pdf.prawn",     File.join("app/views", @controller_file_path, "export.pdf.prawn"))
+      m.template("view_show.pdf.prawn",     File.join("app/views", @controller_file_path, "show.pdf.prawn"))
+    end
     m.template("view_new.html.#{@engine}",     File.join("app/views", @controller_file_path, "new.html.#{@engine}"))
     m.template("view_edit.html.#{@engine}",    File.join("app/views", @controller_file_path, "edit.html.#{@engine}"))
     m.template("view_form.html.#{@engine}",    File.join("app/views", @controller_file_path, "_form.html.#{@engine}"))
     m.template("view_show.html.#{@engine}",    File.join("app/views", @controller_file_path, "show.html.#{@engine}"))
+    m.template("view_ajuda.html.#{@engine}", File.join("app/views", @controller_file_path, "_ajuda.html.#{@engine}"))
     m.template("view_sidebar.html.#{@engine}", File.join("app/views", @controller_file_path, "_sidebar.html.#{@engine}"))
 
     if options[:layout]
@@ -151,6 +161,7 @@ protected
     opt.on("--flexselect", "Define the class flexselect to dropdown fields") { |v| options[:flexselect] = true }
     opt.on("--datepicker", "Define DatePicker to Date fields") { |v| options[:datepicker] = true }
     opt.on("--searchlogic", "Add support to Searchlogic order records on index page") { |v| options[:searchlogic] = true }
+    opt.on("--exports", "Exports data in XML, CSV, JSON and PDF formats") { |v| options[:exports] = true }
     opt.on("--listfields=campo1:titulo1;campo2:titulo2", "Field list of index page") { |v| options[:listfields] = v }
     opt.on("--fieldlist=file", "Path of field list definitions on format: field,label,hint,mask. One per line.") { |v| options[:fieldlist] = v }
   end

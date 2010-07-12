@@ -132,9 +132,13 @@ If you use `will_paginate` for pagination use the `--with_will_paginate`:
 
     script/generate themed items post --with_will_paginate
 
+If you use `prawn`, `prawnto`, `fastercsv` and `csv_builder` for export data in PDF and CSV format use the `--exports`:
+
+    script/generate themed items post --exports
+
 If you want fullpower of Web-App-Theme use:
 
-    script/generate themed estadios estadio --with_will_paginate --ajaxpage --removeall --searchlogic --listfields=apelido:Estádio,cidade_cidade:Cidade,fundacao:Fundado\ em,funcionando:Funcionando\? --layout=backend
+    script/generate themed backend/basicos/ufs uf --layout=backend --with_will_paginate --ajaxpage --tinymce --removeall --flexselect --datepicker --searchlogic --exports --listfields=uf:Estado,sigla:Sigla
 
   Note that was escaped spaces and special chars.
 

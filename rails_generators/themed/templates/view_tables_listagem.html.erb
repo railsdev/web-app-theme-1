@@ -32,7 +32,14 @@
           <% else %>
             <th><%%= t("web-app-theme.created_at", :default => "Created at")  %></th>
           <% end %>
-          <th class="last">&nbsp;</th>
+          <th class="last" style="text-align:right;">
+            <% if options[:exports] %>
+            <a href="<%= plural_resource_name %>.pdf?<%%=request.env['QUERY_STRING']%>"><image src="/images/web-app-theme/bullet_red.png" title="PDF" alt="PDF"></a>
+            <a href="<%= plural_resource_name %>.xml?<%%=request.env['QUERY_STRING']%>"><image src="/images/web-app-theme/bullet_orange.png" title="XML" alt="XML"></a>
+            <a href="<%= plural_resource_name %>.csv?<%%=request.env['QUERY_STRING']%>"><image src="/images/web-app-theme/bullet_green.png" title="CSV" alt="CSV"></a>
+            <a href="<%= plural_resource_name %>.json?<%%=request.env['QUERY_STRING']%>"><image src="/images/web-app-theme/bullet_blue.png" title="JSON" alt="JSON"></a>
+            <% end %>
+          </th>
         </tr>
         <%% @<%= plural_resource_name %>.each do |<%= resource_name %>| -%>
         <tr class="<%%= cycle("odd", "even") %>">

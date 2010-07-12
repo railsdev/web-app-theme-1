@@ -1,5 +1,16 @@
 <div class="block">
   <div class="secondary-navigation">
+    <div style="float:right;margin-right:6px;margin-top:3px;">
+      <ol style="list-style-type: none;">
+        <% if options[:exports] %>
+        <li style="display: inline;"><a href="<%= plural_resource_name %>/export.pdf"><img src="/images/web-app-theme/pdf.png" alt="pdf" title="pdf"></a></li>
+        <li style="display: inline;"><a href="<%= plural_resource_name %>/export.xml"><img src="/images/web-app-theme/xml.png" alt="xml" title="xml"></a></li>
+        <li style="display: inline;"><a href="<%= plural_resource_name %>/export.csv"><img src="/images/web-app-theme/csv.png" alt="csv" title="csv"></a></li>
+        <li style="display: inline;"><a href="<%= plural_resource_name %>/export.json"><img src="/images/web-app-theme/json.png" alt="json" title="json"></a></li>
+        <% end %>
+        <li style="display: inline;"><a href="#" id="ajudalink"><img src="/images/web-app-theme/help.png" alt="ajuda" title="ajuda"></a></li>
+      </ol>
+    </div>
     <ul class="wat-cf">
       <li class="first active"><%%= link_to "#{t("web-app-theme.list", :default => "List")}", <%= controller_routing_path %>_path  %></li>
       <li><%%= link_to "#{t("web-app-theme.new", :default => "New")}", new_<%= singular_controller_routing_path %>_path %></li>
@@ -23,6 +34,7 @@
 </div>
 
 <%% content_for :sidebar, render(:partial => 'sidebar') -%>
+<%%= render :partial => "ajuda" %>
 <% if options[:removeall] %>
 <div id="dialog" title="Confirmação de exclusão de lote de registros"><p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 0 0;"></span><b>Deseja remover todos os registros selecionados?</b><p></div>
 <script type="text/javascript">

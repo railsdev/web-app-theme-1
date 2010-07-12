@@ -22,6 +22,11 @@ namespace :web_app_theme do
       FileUtils.cp_r File.join(RAILS_ROOT, '/vendor/plugins/web-app-theme/images/arrows-ffffff.png'), File.join(RAILS_ROOT, '/public/images/')
       FileUtils.cp_r File.join(RAILS_ROOT, '/vendor/plugins/web-app-theme/images/shadow.png'), File.join(RAILS_ROOT, '/public/images/')
       FileUtils.cp_r File.join(RAILS_ROOT, '/vendor/plugins/web-app-theme/images/spinner.gif'), File.join(RAILS_ROOT, '/public/images/')
+      puts "Copying help images"
+			FileUtils.mkdir RAILS_ROOT + '/public/images/ajuda'
+  		imgajuda_dir = RAILS_ROOT + '/public/images/ajuda/'
+  		imgajuda = Dir[File.join(File.dirname(__FILE__), '..', '/images/ajuda/', '*.png')]
+  		FileUtils.cp(imgajuda, imgajuda_dir)
 #      sh %{ script/generate formtastic }
 #      sh %{ rake jrails:js:install }
 #      sh %{ rake jrails:js:scrub }

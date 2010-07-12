@@ -1,0 +1,23 @@
+# Colunas
+<%
+    colunas = ""
+    columns.each do |column|
+        colunas +=  "\"" + column.name.humanize + "\","
+    end
+%>
+csv << ["ID", <%=colunas%> "Criado em"]
+row_data = []
+@<%= plural_resource_name %>.each do |<%= resource_name %>|
+  row_data = [<%= resource_name %>.id.to_s()]
+  <% columns.each do |column| %>
+  row_data << [<%= resource_name %>.<%=column.name%>]
+     <% if column.name.index("_id") %>
+        <% coluna = column.name.gsub("_id","") %>
+  row_data << [<%= resource_name %>.<%= coluna %>.<%= coluna %>]
+     <% end %>
+  <% end %>
+  row_data << [<%= resource_name %>.created_at.to_s()]
+  csv << row_data.dup # it breaks if you don't dup
+end
+csv << []
+
