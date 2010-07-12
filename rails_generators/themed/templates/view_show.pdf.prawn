@@ -24,7 +24,15 @@ end
     %>
 pdf.text "<%=column.name.humanize%>: " + @<%= resource_name %>.<%=coluna%>.<%=coluna%>.to_s
             <%else%>
-pdf.text "<%=column.name.humanize%>: " + @<%= resource_name %>.<%=column.name%><%if column.type.to_s == "date"%>.strftime(\"%d/%m/%Y\")<%elsif column.type.to_s == "datetime"%>.strftime(\"%d/%m/%Y %H:%M\")<%end%>.to_s
+            <%if column.type.to_s == "date"%>
+if @<%= resource_name %>.<%=column.name%>
+            <%end%>
+pdf.text "<%=column.name.humanize%>: " + @<%= resource_name %>.<%=column.name%><%if column.type.to_s == "date"%>.strftime("%d/%m/%Y")<%elsif column.type.to_s == "datetime"%>.strftime(\"%d/%m/%Y %H:%M\")<%end%>.to_s
+            <%if column.type.to_s == "date"%>
+else
+  pdf.text "<%=column.name.humanize%>: "
+end
+            <%end%>
             <%end%>
        <%end%>
    <%end%>

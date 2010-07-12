@@ -50,8 +50,18 @@
               iCont = 0
               listfield.each do |linha|
                 valorlinha = linha.split(":")
+                formataData = ""
+                linhaTabela = resource_name + "." + valorlinha[0].gsub("_",".") + "\%\>"
+                columns.each do |col|
+                  if col.name.to_s == valorlinha[0]
+                    if col.type.to_s == "date"
+                      formataData = ".strftime(\"%d/%m/%Y\")"
+                      linhaTabela = "if " + resource_name + "." + valorlinha[0].gsub("_",".") + "\%\>\<\%\=" + resource_name + "." + valorlinha[0].gsub("_",".") + formataData + "\%\>\<\%end\%\>"
+                    end
+                  end
+                end
                 if iCont > 0%>
-                  <td><%%= <%= resource_name %>.<%=valorlinha[0].gsub("_",".")%> %></td>
+                  <td><%% <%= linhaTabela %></td>
                 <%else%>
                   <td><%%= link_to <%= resource_name %>.<%=valorlinha[0].gsub("_",".")%>, <%= singular_controller_routing_path %>_path(<%= resource_name %>) %></td>
                 <%end%>

@@ -19,7 +19,7 @@ head_<%=coluna%> = pdf.lazy_bounding_box [<%= tamanho %>,iAltura], :width => 100
   pdf.text "<%=coluna.humanize%>", :style => :bold
 end
     <%else
-        if !column.name.index("_content_type") && !column.name.index("_file_size") && !column.name.index("_updated_at")%>
+        if !column.name.index("_content_type") && !column.name.index("_file_size") && !column.name.index("_updated_at") && column.type.to_s != "text"%>
 head_<%=column.name%> = pdf.lazy_bounding_box [<%= tamanho %>,iAltura], :width => 100 do
   pdf.text "<%=column.name.humanize%>", :style => :bold
 end
@@ -36,14 +36,14 @@ head_id.draw
         coluna = column.name.gsub("_file_name","")%>
 head_<%=coluna%>.draw
     <%else
-        if !column.name.index("_content_type") && !column.name.index("_file_size") && !column.name.index("_updated_at")%>
+        if !column.name.index("_content_type") && !column.name.index("_file_size") && !column.name.index("_updated_at") && column.type.to_s != "text"%>
 head_<%=column.name%>.draw
         <%end%>
     <%end%>
 <%end%>
 pdf.stroke_horizontal_rule
 
-@ufs.map do |item|
+@<%= plural_resource_name %>.map do |item|
   iAltura = iAltura-40
   pdf.bounding_box [0,iAltura], :width => 20 do
     pdf.text item.id.to_s
@@ -63,7 +63,7 @@ pdf.bounding_box [<%=tamanho%>,iAltura], :width => 100 do
     end
 end
     <%else
-        if !column.name.index("_content_type") && !column.name.index("_file_size") && !column.name.index("_updated_at")
+        if !column.name.index("_content_type") && !column.name.index("_file_size") && !column.name.index("_updated_at") && column.type.to_s != "text"
             if column.name.index("_id")
                 coluna = column.name.gsub("_id","")
     %>
@@ -72,7 +72,15 @@ pdf.bounding_box [<%=tamanho%>,iAltura], :width => 100 do
 end
             <%else%>
 pdf.bounding_box [<%=tamanho%>,iAltura], :width => 100 do
-    pdf.text item.<%=column.name%><%if column.type.to_s == "date"%>.strftime(\"%d/%m/%Y\")<%elsif column.type.to_s == "datetime"%>.strftime(\"%d/%m/%Y %H:%M\")<%end%>.to_s
+<%if column.type.to_s == "date"%>
+if item.<%=column.name%>
+<%end%>
+    pdf.text item.<%=column.name%><%if column.type.to_s == "date"%>.strftime("%d/%m/%Y")<%elsif column.type.to_s == "datetime"%>.strftime("%d/%m/%Y %H:%M")<%end%>.to_s
+<%if column.type.to_s == "date"%>
+else
+    pdf.text " "
+end
+<%end%>
 end
             <%end%>
        <%end%>
